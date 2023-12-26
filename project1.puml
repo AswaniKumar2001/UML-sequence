@@ -1,0 +1,45 @@
+@startuml
+
+actor Customer #BlueViolet
+loop until Option>0 and Option<4
+
+    Customer -> Hotel : Request Menu
+    activate Customer
+    activate Hotel
+    database MenuCard #YellowGreen
+
+    Hotel -> MenuCard : Search menu 
+    MenuCard --> Customer : Show menu
+    alt Option 1 or Option 2 or Option 3
+        MenuCard --> Customer : Displays Veg/Non-Veg/Beverages menu
+        Customer -> Hotel : Enter Option
+        Hotel -> MenuCard : Checks option
+        Hotel --> Customer : Enter Quantity
+        Customer -> Hotel : Quantity
+        MenuCard --> Customer : Asks to continue order or not
+        Customer -> Hotel : Enters Option [Y/N]
+    else other options
+        MenuCard -> Customer : Invalid Option 
+    end
+    alt Option 1 or Option 2 or Option 3
+        MenuCard --> Customer : Displays items in selected option
+        Customer -> Hotel : Enter Dish
+        Hotel -> MenuCard : Checks Dish
+        MenuCard --> Customer : Confirms the dish and order is placed
+    else other options
+        MenuCard --> Customer : Invalid Option
+        end
+    alt Option 0
+        MenuCard --> Customer : Displays exit message
+        deactivate Customer
+        deactivate Hotel
+        deactivate MenuCard
+    end
+    
+end loop 
+
+@enduml
+
+
+
+@endumls
